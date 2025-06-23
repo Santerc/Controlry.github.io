@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controlry | 创新电控仿真平台</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body class="home-page">
+  <nav class="dji-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><span>Controlry</span>项目</a>
+      <div class="nav-links">
+        <a href="index.html" class="active">首页</a>
+        <a href="tutorial.html">教程</a>
+        <a href="downloads.html">下载</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-video">
+      <video autoplay muted loop>
+        <source src="assets/videos/hero-background.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">Controlry <span>仿真电控教学框架</span></h1>
+      <p class="hero-subtitle">为 RoboMaster 设计，支持 C++ 实时控制和可视化调参</p>
+      <div class="hero-buttons">
+        <a href="tutorial.html" class="dji-btn dji-btn-primary">教程文档</a>
+        <a href="downloads.html" class="dji-btn dji-btn-outline">版本下载</a>
+      </div>
+    </div>
+    <div class="scroll-indicator"><span></span></div>
+  </section>
+
+  <section class="features-section">
+    <div class="section-header">
+      <h2>框架亮点</h2>
+      <p>基于 C++17 与 ImGUI 的高性能仿真调试平台</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-microchip"></i></div>
+        <h3>实时电机控制</h3><p>支持电机角度和速度反馈、力矩输出接口</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-stream"></i></div>
+        <h3>多线程架构</h3><p>分离收发、控制、调试线程，降低延迟</p></div>
+      <div class="feature-card"><div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+        <h3>GUI 调试界面</h3><p>使用简单的API，轻松添加滑块、输入框等方式实时修改变量并波形可视化</p></div>
+    </div>
+  </section>
+
+  <section class="preview-section">
+    <div class="preview-container">
+      <div class="preview-content">
+        <h2>演示视频</h2>
+        <p>在 B 站了解框架运行演示与接口说明</p>
+        <a href="https://www.bilibili.com/video/BV1FdTfziEVu" target="_blank" class="dji-btn dji-btn-primary">前往 Bilibili</a>
+      </div>
+      <div class="preview-image">
+        <iframe src="https://player.bilibili.com/player.html?bvid=BV1FdTfziEVu" allowfullscreen style="width:100%;height:360px;border-radius:10px;box-shadow:0 20px 40px rgba(0,0,0,0.3);"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="dji-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo"><span>Controlry</span></a>
+        <p>RoboMaster 自动化电控教学平台</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>项目</h4>
+          <a href="tutorial.html">教程</a>
+          <a href="downloads.html">版本</a>
+          <a href="about.html">关于</a>
+        </div>
+        <div class="link-group">
+          <h4>社区</h4>
+          <a href="https://github.com/Santerc/Controlry" target="_blank">GitHub</a>
+          <a href="#">Bilibili</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Santerc. 保留所有权利.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-bilibili"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+</body>
+</html>

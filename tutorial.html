@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controlry 教程文档</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+  <!-- 1. 引入高亮库的 CSS -->
+  <link rel="stylesheet" href="assets/third/styles/atom-one-dark-reasonable.css">
+  <!-- 2. 引入高亮库的 JS -->
+  <script src="assets/third/highlight.min.js"></script>
+  <!-- 3. 初始化 -->
+  <script>
+    hljs.highlightAll();
+  </script>
+
+  <style>
+    .tutorial-container { display: flex; max-width: 1400px; margin: 0 auto; }
+    .sidebar { width: 250px; background: #1a1a1a; padding: 30px 20px; border-right: 1px solid #333; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .sidebar h3 { margin-bottom: 20px; color: #fff; font-size: 20px; }
+    .sidebar a { display: block; margin: 10px 0; color: #ccc; transition: 0.3s; }
+    .sidebar a:hover { color: #ff2e2e; transform: translateX(5px); }
+    .content { flex: 1; padding: 40px; }
+    .content h2, .content h3 { color: #fff; margin-top: 40px; }
+    .content p, .content li { color: #ccc; }
+    pre { background: #2d2d2d; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    @media (max-width: 768px) {
+      .tutorial-container { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid #333; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="dji-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><span>Controlry</span></a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="tutorial.html" class="active">教程</a>
+        <a href="downloads.html">下载</a>
+        <a href="about.html">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="features-section">
+    <div class="tutorial-container">
+      <div class="sidebar">
+        <h3>教程目录</h3>
+        <a href="#quickstart">快速开始</a>
+        <a href="#ui">界面说明</a>
+        <a href="#protocol">通信协议</a>
+        <a href="#motor">电机控制</a>
+        <a href="#debugapi">调试 API</a>
+      </div>
+      <div class="content">
+        <h2 id="quickstart">快速开始</h2>
+        <p><strong>项目克隆：</strong></p>
+        <pre><code class="language-bash">git clone https://github.com/Santerc/Controlry.git</code></pre>
+        <p><strong>安装依赖：</strong></p>
+        <pre><code class="language-bash">cd Backend
+mkdir third #如果已经存在，则跳过这里以及下面的git clone
+cd third
+git clone https://github.com/ocornut/imgui.git</code></pre>
+        <p><strong>项目结构简介：</strong></p>
+        <ul>
+          <li><code>Frontend/</code>：仿真窗口（6020.exe）</li>
+          <li><code>Backend/</code>：C++ 控制端核心代码</li>
+          <li><code>User/src/MotorControl.cpp</code>：主循环控制逻辑</li>
+        </ul>
+        <p><strong>启动顺序：</strong>必须先运行 <code>6020.exe</code>，再运行控制端</p>
+
+        <h2 id="ui">界面说明</h2>
+        
+        </ul>
+
+        <h2 id="protocol">通信协议</h2>
+        <h3>反馈数据包（11 字节）</h3>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:30px;">
+          <thead>
+            <tr style="background:#333;color:#fff;">
+              <th style="padding:10px;border:1px solid #555;">字段</th>
+              <th style="padding:10px;border:1px solid #555;">字节范围</th>
+              <th style="padding:10px;border:1px solid #555;">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">包头</td>
+              <td style="padding:10px;border:1px solid #555;">0</td>
+              <td style="padding:10px;border:1px solid #555;">固定值 <code>0xA0</code></td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">电机 ID</td>
+              <td style="padding:10px;border:1px solid #555;">1</td>
+              <td style="padding:10px;border:1px solid #555;">电机编号 (0~255)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">角度</td>
+              <td style="padding:10px;border:1px solid #555;">2–5</td>
+              <td style="padding:10px;border:1px solid #555;">float (单位：度)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">角速度</td>
+              <td style="padding:10px;border:1px solid #555;">6–9</td>
+              <td style="padding:10px;border:1px solid #555;">float (单位：rad/s)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">校验和</td>
+              <td style="padding:10px;border:1px solid #555;">10</td>
+              <td style="padding:10px;border:1px solid #555;">XOR 校验（字节 0~9）</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>命令数据包（7 字节）</h3>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:#333;color:#fff;">
+              <th style="padding:10px;border:1px solid #555;">字段</th>
+              <th style="padding:10px;border:1px solid #555;">字节范围</th>
+              <th style="padding:10px;border:1px solid #555;">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">包头</td>
+              <td style="padding:10px;border:1px solid #555;">0</td>
+              <td style="padding:10px;border:1px solid #555;">固定值 <code>0xA1</code></td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">电机 ID</td>
+              <td style="padding:10px;border:1px solid #555;">1</td>
+              <td style="padding:10px;border:1px solid #555;">电机编号 (0~255)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">力矩</td>
+              <td style="padding:10px;border:1px solid #555;">2–5</td>
+              <td style="padding:10px;border:1px solid #555;">float (单位：Nm)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;">校验和</td>
+              <td style="padding:10px;border:1px solid #555;">6</td>
+              <td style="padding:10px;border:1px solid #555;">XOR 校验（字节 0~5）</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <h2 id="motor">电机控制</h2>
+        <p><strong>获取电机实例：</strong></p>
+        <pre><code class="language-cpp">
+          Motor* motor = MotorManager::getInstance().getMotor(0);
+        </code></pre>
+        <p><strong>读取状态：</strong></p>
+        <pre><code class="language-cpp">float angle = motor->getCurrentAngle();
+float omega = motor->getCurrentOmega();</code></pre>
+        <p><strong>设置输出力矩：</strong></p>
+        <pre><code class="language-cpp">motor->setTorque(1.5f);</code></pre>
+
+        <h2 id="debugapi">调试 API</h2>
+        <p><strong>添加可编辑变量：</strong></p>
+        <pre><code class="language-cpp">debugInterface.addEditableVariable("Kp", &kp, 0.0f, 10.0f, 0.1f, InputType::SLIDER);</code></pre>
+        <p><strong>添加观测变量：</strong></p>
+        <pre><code class="language-cpp">debugInterface.addWatchVariable("速度", &omega, ViewMode::WAVEFORM, "rad/s", 0xffcc00);</code></pre>
+        <h3>参数编辑方式</h3>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+          <thead>
+            <tr style="background:#333;color:#fff;">
+              <th style="padding:10px;border:1px solid #555;">枚举值</th>
+              <th style="padding:10px;border:1px solid #555;">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;"><code>SLIDER</code></td>
+              <td style="padding:10px;border:1px solid #555;">滑动条</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;"><code>DRAG</code></td>
+              <td style="padding:10px;border:1px solid #555;">拖拽条</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;"><code>INPUT_BOX</code></td>
+              <td style="padding:10px;border:1px solid #555;">输入框</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>变量观测模式</h3>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:#333;color:#fff;">
+              <th style="padding:10px;border:1px solid #555;">枚举值</th>
+              <th style="padding:10px;border:1px solid #555;">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;"><code>WAVEFORM</code></td>
+              <td style="padding:10px;border:1px solid #555;">波形显示</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;border:1px solid #555;"><code>NUMERIC</code></td>
+              <td style="padding:10px;border:1px solid #555;">数值显示</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+</body>
+</html>
